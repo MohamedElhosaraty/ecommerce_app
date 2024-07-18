@@ -5,6 +5,7 @@ import 'package:ecommerce_app/cubit/bottom_bar/bottom_cubit.dart';
 import 'package:ecommerce_app/cubit/category/category_cubit.dart';
 import 'package:ecommerce_app/cubit/category_details/category_details_cubit.dart';
 import 'package:ecommerce_app/cubit/home/home_cubit.dart';
+import 'package:ecommerce_app/cubit/one_category/one_category_cubit.dart';
 import 'package:ecommerce_app/modules/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => CategoryDetailsCubit(DioConsumer(dio: Dio())),
+              ),
+              BlocProvider(
+                create: (context) => OneCategoryCubit(DioConsumer(dio: Dio())),
               ),
             ],
             child: MaterialApp(
