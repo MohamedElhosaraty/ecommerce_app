@@ -60,7 +60,7 @@ class LoginCubit extends Cubit<LoginState> {
         CacheHelper.saveData(key: ApiKey.token, value: loginModel?.data?.token);
         emit(LoginSuccessState());
         showToast(message: loginModel!.message.toString(),state: ToastStates.SUCCESS);
-        navigateAndFinish(context, const BottomBar());
+        navigateAndFinish(context,  BottomBar());
 
       }else{
         emit(LoginFailureState(errorMessage: response['message'].toString()));

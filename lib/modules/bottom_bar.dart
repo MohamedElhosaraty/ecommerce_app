@@ -1,11 +1,16 @@
 import 'package:ecommerce_app/cubit/bottom_bar/bottom_cubit.dart';
-import 'package:ecommerce_app/shared/components/text_from.dart';
+import 'package:ecommerce_app/layout/notification.dart';
+import 'package:ecommerce_app/layout/search.dart';
+import 'package:ecommerce_app/shared/components/navigatorto.dart';
+import 'package:ecommerce_app/shared/components/textbest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BottomBar extends StatelessWidget {
-  const BottomBar({super.key});
+   BottomBar({super.key});
+
+  final TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -16,17 +21,35 @@ class BottomBar extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
           toolbarHeight: 100,
-          title: TextForm(
-            radius: 10,
-            prefixIcon: const Icon(Icons.search,color: Colors.blueAccent,),
-            hintText: 'Search Product',
-            hintStyle: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 15.sp,
-              color: Colors.grey,
+          title:InkWell(
+            onTap: (){
+              navigateTo(context, SearchScreen());
+            },
+            child: Container(
+              height: 50.h,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                border: Border.all(color: Colors.black)
+              ),
+              child:  Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                 const Icon(Icons.search,color: Colors.blueAccent,),
+                 Padding(
+                   padding: EdgeInsets.only(left: 20.w),
+                   child: TextBest(
+                       text: 'Search Product',
+                     fontWeight: FontWeight.w400,
+                     fontSize: 15.sp,
+                     color: Colors.grey,
+                   ),
+                 ),
+              ],),
             ),
           ),
-          actions: 
+
+          actions:
           [
             IconButton(
                 onPressed: (){},
@@ -38,7 +61,9 @@ class BottomBar extends StatelessWidget {
                 ),
             ),
             IconButton(
-                onPressed: (){},
+                onPressed: (){
+                  navigateTo(context,const NotificationScreen());
+                },
                 icon: Icon(
                   Icons.notifications_none_outlined,
                   size: 40.w,

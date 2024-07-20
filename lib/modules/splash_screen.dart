@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if(CacheHelper.getData(key: ApiKey.token) == null){
       widget = const LoginScreen();
     }else{
-      widget = const BottomBar();
+      widget =  BottomBar();
     }
     LoginCubit(DioConsumer(dio: Dio())).splashScreen(
         context, widget,
