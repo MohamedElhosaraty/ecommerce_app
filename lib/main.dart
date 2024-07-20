@@ -6,6 +6,7 @@ import 'package:ecommerce_app/cubit/category/category_cubit.dart';
 import 'package:ecommerce_app/cubit/category_details/category_details_cubit.dart';
 import 'package:ecommerce_app/cubit/home/home_cubit.dart';
 import 'package:ecommerce_app/cubit/one_category/one_category_cubit.dart';
+import 'package:ecommerce_app/cubit/profile/profile_cubit.dart';
 import 'package:ecommerce_app/cubit/search/search_cubit.dart';
 import 'package:ecommerce_app/modules/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,9 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => SearchCubit(DioConsumer(dio: Dio())),
+              ),
+              BlocProvider(
+                create: (context) => ProfileCubit(DioConsumer(dio: Dio()))..getUserData(),
               ),
             ],
             child: MaterialApp(
