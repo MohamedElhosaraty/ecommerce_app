@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_app/cubit/category/category_cubit.dart';
 import 'package:ecommerce_app/cubit/category_details/category_details_cubit.dart';
+import 'package:ecommerce_app/cubit/favourite/favourite_cubit.dart';
 import 'package:ecommerce_app/cubit/home/home_cubit.dart';
 import 'package:ecommerce_app/cubit/one_category/one_category_cubit.dart';
 import 'package:ecommerce_app/layout/all_category.dart';
@@ -157,7 +158,7 @@ class HomeScreen extends StatelessWidget {
                                 OneCategoryCubit.get(context).oneCategoryDetails(productId: homeModel.products[index].id);
                                 navigateTo(context, ProductDetails());
                               },
-                              child: BuildBodyProduct(homeModel: homeModel.products[index]))
+                              child: BuildBodyProduct(homeModel: homeModel.products[index],index : index))
                         ),
                       ),
                     ],
@@ -198,9 +199,10 @@ class BuildCategoriesItem extends StatelessWidget {
 }
 
 class BuildBodyProduct extends StatelessWidget {
-    const BuildBodyProduct({super.key, required this.homeModel,  });
+    const BuildBodyProduct({super.key, required this.homeModel, required this.index,  });
 
    final Product homeModel ;
+   final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -231,10 +233,24 @@ class BuildBodyProduct extends StatelessWidget {
                       fontSize: 15.sp,
                       fontWeight: FontWeight.bold),
                 ),
-                TextBest(
-                  text: homeModel.price
-                      .toString(),
-                  color: colorBlue,
+                Row(
+                  children: [
+                    TextBest(
+                      text: homeModel.price
+                          .toString(),
+                      color: colorBlue,
+                    ),
+                    const Spacer(),
+                    IconButton(
+                        onPressed: (){
+                          FavouriteCubit.get(context).changeFavorites(homeModel.id,index,context);
+                        },
+                        icon: Icon(
+                          Icons.favorite,size: 28.w,
+                          color: homeModel.inFavorites ? Colors.red : Colors.grey,
+                        )
+                    ),
+                  ],
                 ),
                 if (homeModel.discount != 0)
                 Row(
@@ -250,7 +266,7 @@ class BuildBodyProduct extends StatelessWidget {
                       width: MediaQuery.of(context)
                           .size
                           .width *
-                          .1,
+                          .09,
                     ),
                     if (homeModel.discount != 0)
                       TextBest(

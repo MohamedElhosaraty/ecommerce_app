@@ -36,7 +36,7 @@ class OfferScreen extends StatelessWidget {
                         navigateTo(context, ProductDetails());
                       },
                       child:
-                      BuildBodyProduct(homeModel: homeModel[index]))
+                      BuildBodyProduct(homeModel: homeModel[index],index: index,))
               ),
             ),
           ),

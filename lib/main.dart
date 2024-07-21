@@ -4,6 +4,7 @@ import 'package:ecommerce_app/core/api/dio_consumer.dart';
 import 'package:ecommerce_app/cubit/bottom_bar/bottom_cubit.dart';
 import 'package:ecommerce_app/cubit/category/category_cubit.dart';
 import 'package:ecommerce_app/cubit/category_details/category_details_cubit.dart';
+import 'package:ecommerce_app/cubit/favourite/favourite_cubit.dart';
 import 'package:ecommerce_app/cubit/home/home_cubit.dart';
 import 'package:ecommerce_app/cubit/one_category/one_category_cubit.dart';
 import 'package:ecommerce_app/cubit/profile/profile_cubit.dart';
@@ -52,6 +53,9 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => ProfileCubit(DioConsumer(dio: Dio()))..getUserData(),
+              ),
+              BlocProvider(
+                create: (context) => FavouriteCubit(DioConsumer(dio: Dio()))..getFavorite(),
               ),
             ],
             child: MaterialApp(
