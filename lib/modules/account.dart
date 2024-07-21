@@ -23,10 +23,15 @@ class AccountScreen extends StatelessWidget {
           : SingleChildScrollView(
               child: Column(
                 children: [
-                  CircleAvatar(
-                    radius: 100,
-                    backgroundImage:
-                        NetworkImage(profileCubit.profileModel!.data.image),
+                  InkWell(
+                    onTap: (){
+                      profileCubit.getImage();
+                    },
+                    child: CircleAvatar(
+                      radius: 100,
+                      backgroundImage:
+                          NetworkImage(profileCubit.profileModel!.data.image),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(

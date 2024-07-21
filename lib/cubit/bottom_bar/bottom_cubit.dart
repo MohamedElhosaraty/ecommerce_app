@@ -2,7 +2,7 @@ import 'package:ecommerce_app/modules/account.dart';
 import 'package:ecommerce_app/modules/cart.dart';
 import 'package:ecommerce_app/modules/home.dart';
 import 'package:ecommerce_app/modules/offer.dart';
-import 'package:ecommerce_app/modules/search.dart';
+import 'package:ecommerce_app/modules/favourite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,7 +18,7 @@ class BottomCubit extends Cubit<BottomState> {
   List<Widget> screen =
     const  [
       HomeScreen(),
-      SearchScreen(),
+      FavouriteScreen(),
       CartScreen(),
       OfferScreen(),
       AccountScreen(),

@@ -86,7 +86,7 @@ class BottomBar extends StatelessWidget {
               BottomNavigationBarItem(
                   icon: Icon(Icons.home), label: 'Home'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.search), label: 'Explore'),
+                  icon: Icon(Icons.favorite), label: 'Favourite'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.shopping_cart), label: 'Cart'),
               BottomNavigationBarItem(
