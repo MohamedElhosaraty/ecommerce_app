@@ -9,6 +9,7 @@ class EndPoints {
 class ApiKey {
   static String recommend = 'recommend';
   static String products = 'products';
+  static String carts = 'carts';
   static String notifications = 'notifications';
   static String home = 'home';
   static String text = 'text';

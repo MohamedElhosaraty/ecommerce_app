@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:ecommerce_app/cache/cache_helper.dart';
 import 'package:ecommerce_app/core/api/dio_consumer.dart';
 import 'package:ecommerce_app/cubit/bottom_bar/bottom_cubit.dart';
+import 'package:ecommerce_app/cubit/carts/carts_cubit.dart';
 import 'package:ecommerce_app/cubit/category/category_cubit.dart';
 import 'package:ecommerce_app/cubit/category_details/category_details_cubit.dart';
 import 'package:ecommerce_app/cubit/favourite/favourite_cubit.dart';
@@ -56,6 +57,9 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => FavouriteCubit(DioConsumer(dio: Dio()))..getFavorite(),
+              ),
+              BlocProvider(
+                create: (context) => CartsCubit(DioConsumer(dio: Dio()))..getCarts(),
               ),
             ],
             child: MaterialApp(

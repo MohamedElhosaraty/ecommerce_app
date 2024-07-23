@@ -52,15 +52,6 @@ class BottomBar extends StatelessWidget {
           actions:
           [
             IconButton(
-                onPressed: (){},
-                icon: Icon(
-                  Icons.favorite_border_outlined,
-                  size: 40.w,
-                  color: Colors.grey,
-
-                ),
-            ),
-            IconButton(
                 onPressed: (){
                   navigateTo(context,const NotificationScreen());
                 },
