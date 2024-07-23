@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/cubit/carts/carts_cubit.dart';
 import 'package:ecommerce_app/cubit/one_category/one_category_cubit.dart';
 import 'package:ecommerce_app/layout/product_details.dart';
+import 'package:ecommerce_app/shared/components/color.dart';
 import 'package:ecommerce_app/shared/components/navigatorto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,67 +14,82 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CartsCubit, CartsState>(
       builder: (context, state) {
-
         final cubit = CartsCubit.get(context).cartsModel?.data;
 
-        return state is CartsLoadingState ? const Center(child: CircularProgressIndicator(),) :
-        ListView.separated(
-          itemBuilder: (context, index) {
-            return SizedBox(
-              height: MediaQuery.of(context).size.height / 4,
-              width: MediaQuery.of(context).size.width / 4,
-              child: InkWell(
-                onTap: () {
-                  OneCategoryCubit.get(context)
-                      .oneCategoryDetails(productId: cubit.cartItems[index].id);
-                  navigateTo(context, ProductDetails());
-                },
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 2.5,
-                      child: Image(
-                        image: NetworkImage(cubit.cartItems[index].product.image),
+        return state is CartsLoadingState
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView.separated(
+                itemBuilder: (context, index) {
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height / 4,
+                    width: MediaQuery.of(context).size.width / 4,
+                    child: InkWell(
+                      onTap: () {
+                        OneCategoryCubit.get(context).oneCategoryDetails(
+                            productId: cubit.cartItems[index].id);
+                        navigateTo(context, ProductDetails());
+                      },
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            child: Image(
+                              image: NetworkImage(
+                                  cubit.cartItems[index].product.image),
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 35,
+                          ),
+                          Expanded(
+                              child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                cubit.cartItems[index].product.name,
+                                style: TextStyle(
+                                  fontSize: 15.sp,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8.h,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    cubit.cartItems[index].product.price
+                                        .round()
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                      color: Colors.blueAccent,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  IconButton(
+                                      onPressed: (){
+                                        CartsCubit.get(context).deleteCarts(cubit.cartItems[index].id, context);
+                                      }, icon: Icon(
+                                    Icons.delete,color: colorGrey,size: 30.w,))
+                                ],
+                              ),
+                            ],
+                          )),
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 35,
-                    ),
-                    Expanded(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          cubit.cartItems[index].product.name,
-                          style: TextStyle(
-                            fontSize: 15.sp,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        Text(
-                          cubit.cartItems[index].product.price.round().toString(),
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            color: Colors.blueAccent,
-                          ),
-                        ),
-                      ],
-                    )),
-                  ],
+                  );
+                },
+                separatorBuilder: (context, index) => Divider(
+                  height: 30.h,
+                  thickness: 2,
                 ),
-              ),
-            );
-          },
-          separatorBuilder: (context, index) => Divider(
-            height: 30.h,
-            thickness: 2,
-          ),
-          itemCount: cubit!.cartItems.length,
-        );
+                itemCount: cubit!.cartItems.length,
+              );
       },
     );
   }
