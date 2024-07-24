@@ -10,13 +10,18 @@ import 'package:ecommerce_app/cubit/home/home_cubit.dart';
 import 'package:ecommerce_app/cubit/one_category/one_category_cubit.dart';
 import 'package:ecommerce_app/cubit/profile/profile_cubit.dart';
 import 'package:ecommerce_app/cubit/search/search_cubit.dart';
+import 'package:ecommerce_app/home.dart';
 import 'package:ecommerce_app/modules/splash_screen.dart';
+import 'package:ecommerce_app/stripe_payment/stripe_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = ApiKeys.publishableKey;
+  await Stripe.instance.applySettings();
   await CacheHelper().init();
   runApp(const MyApp());
 }
@@ -69,7 +74,7 @@ class MyApp extends StatelessWidget {
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
                 useMaterial3: true,
               ),
-              home: const SplashScreen(),
+              home: const HomeScreen()//const SplashScreen(),
             ),
           );
         }
