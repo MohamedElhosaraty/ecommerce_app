@@ -25,7 +25,7 @@ class FavouriteScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width / 4,
               child: InkWell(
                 onTap: (){
-                  OneCategoryCubit.get(context).oneCategoryDetails(productId: cubit.data[index].id);
+                  OneCategoryCubit.get(context).oneCategoryDetails(productId: cubit.data[index].product.id);
                   navigateTo(context, ProductDetails());
                 },
                 child: Row(

@@ -44,8 +44,8 @@ class Data {
 
 class Product {
   final int id;
-  final int price;
-  final int oldPrice;
+  final dynamic price;
+  final dynamic oldPrice;
   final int discount;
   final String image;
 
