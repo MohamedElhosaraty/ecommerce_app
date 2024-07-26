@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:dio/dio.dart';
 import 'package:ecommerce_app/cache/cache_helper.dart';
 import 'package:ecommerce_app/core/api/dio_consumer.dart';
@@ -12,6 +13,7 @@ import 'package:ecommerce_app/cubit/profile/profile_cubit.dart';
 import 'package:ecommerce_app/cubit/search/search_cubit.dart';
 import 'package:ecommerce_app/modules/splash_screen.dart';
 import 'package:ecommerce_app/stripe_payment/stripe_keys.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,7 +24,9 @@ void main() async {
   Stripe.publishableKey = ApiKeys.publishableKey;
   await Stripe.instance.applySettings();
   await CacheHelper().init();
-  runApp(const MyApp());
+  runApp(DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -67,6 +71,8 @@ class MyApp extends StatelessWidget {
               ),
             ],
             child: MaterialApp(
+              locale: DevicePreview.locale(context),
+              builder: DevicePreview.appBuilder,
               debugShowCheckedModeBanner: false,
               title: 'E-commerce_App',
               theme: ThemeData(
