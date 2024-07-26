@@ -15,6 +15,7 @@ import 'package:ecommerce_app/shared/components/navigatorto.dart';
 import 'package:ecommerce_app/shared/components/textbest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -24,149 +25,178 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return BlocBuilder<HomeCubit, HomeState>(
-      builder: (context, state) {
-        final homeModel = HomeCubit.get(context).homeModel?.data;
+    return OfflineBuilder(
+        connectivityBuilder: (
+        BuildContext context,
+        List<ConnectivityResult> connectivity,
+        Widget child,
+    ) {
+          final bool connected = !connectivity.contains(ConnectivityResult.none);
 
-        return state is HomeLoadingState
-            ? const Center(child: CircularProgressIndicator())
-            : SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                    children: [
-                      CarouselSlider(
-                          items: homeModel?.banners
-                              .map((e) => Image(
-                                    image: NetworkImage(e.image),
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                  ))
-                              .toList(),
-                          options: CarouselOptions(
-                              height: MediaQuery.of(context).size.height * .3,
-                              initialPage: 0,
-                              autoPlay: true,
-                              viewportFraction: 1.0,
-                              reverse: false,
-                              scrollPhysics: const BouncingScrollPhysics(),
-                              autoPlayAnimationDuration:
-                                  const Duration(seconds: 1),
-                              enableInfiniteScroll: true,
-                              autoPlayCurve: Curves.fastLinearToSlowEaseIn,
-                              scrollDirection: Axis.horizontal,
-                              autoPlayInterval: const Duration(seconds: 3))),
-                      SizedBox(
-                        height: size.height * .05,
-                      ),
-                      Row(
-                        children: [
-                          TextBest(
-                            text: 'Category',
-                            fontSize: 16.sp,
-                            color: colorTitle,
-                          ),
-                          const Spacer(),
-                          InkWell(
-                            onTap: (){
-                              navigateTo(context, const AllCategory());
-                            },
-                            child: TextBest(
-                              text: 'See More',
-                              fontSize: 16.sp,
-                              color: colorBlue,
-                            ),
-                          ),
-                        ],
-                      ),
-                      BlocBuilder<CategoryCubit, CategoryState>(
-                        builder: (context, state) {
-                          final categoryModel =
-                              CategoryCubit.get(context).categoryModel;
+          if(connected){
+            return BlocBuilder<HomeCubit, HomeState>(
+              builder: (context, state) {
+                final homeModel = HomeCubit.get(context).homeModel?.data;
 
-                          return state is CategoryLoadingState
-                              ? const Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              : SizedBox(
-                                  height: 80.h,
-                                  child: ListView.separated(
-                                      scrollDirection: Axis.horizontal,
-                                      physics: const BouncingScrollPhysics(),
-                                      itemBuilder: (context, index) {
-                                        return InkWell(
-                                          onTap: () {
-                                            CategoryDetailsCubit.get(context)
-                                                .getCategoryDetails(
-                                                    id: categoryModel
-                                                        .data.data[index].id);
-                                            navigateTo(context,
-                                                const CategoryDetails());
-                                          },
-                                          child: BuildCategoriesItem(
-                                            categoriesModel:
-                                                categoryModel.data.data[index],
-                                          ),
-                                        );
-                                      },
-                                      separatorBuilder: (context, index) =>
-                                          SizedBox(
-                                            width: 10.w,
-                                          ),
-                                      itemCount:
-                                          categoryModel!.data.data.length),
-                                );
-                        },
-                      ),
-                      SizedBox(
-                        height: size.height * .02,
-                      ),
-                      Row(
-                        children: [
-                          TextBest(
-                            text: 'Products',
-                            fontSize: 16.sp,
-                            color: colorTitle,
-                          ),
-                          const Spacer(),
-                          InkWell(
-                            onTap: (){
-                              navigateTo(context, const AllProduct());
-                            },
-                            child: TextBest(
-                              text: 'See More',
-                              fontSize: 16.sp,
-                              color: colorBlue,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: size.height * .02,
-                      ),
-                      GridView.count(
-                        crossAxisCount: 2,
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        crossAxisSpacing: 10.0,
-                        mainAxisSpacing: 10.0,
-                        childAspectRatio: 1 / 1.5.h,
-                        children: List.generate(
-                          homeModel!.products.length,
-                          (index) => InkWell(
-                              onTap: (){
-                                OneCategoryCubit.get(context).oneCategoryDetails(productId: homeModel.products[index].id);
-                                navigateTo(context, ProductDetails());
-                              },
-                              child: BuildBodyProduct(homeModel: homeModel.products[index],index : index))
+                return state is HomeLoadingState
+                    ? const Center(child: CircularProgressIndicator())
+                    : SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      children: [
+                        CarouselSlider(
+                            items: homeModel?.banners
+                                .map((e) => Image(
+                              image: NetworkImage(e.image),
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ))
+                                .toList(),
+                            options: CarouselOptions(
+                                height: MediaQuery.of(context).size.height * .3,
+                                initialPage: 0,
+                                autoPlay: true,
+                                viewportFraction: 1.0,
+                                reverse: false,
+                                scrollPhysics: const BouncingScrollPhysics(),
+                                autoPlayAnimationDuration:
+                                const Duration(seconds: 1),
+                                enableInfiniteScroll: true,
+                                autoPlayCurve: Curves.fastLinearToSlowEaseIn,
+                                scrollDirection: Axis.horizontal,
+                                autoPlayInterval: const Duration(seconds: 3))),
+                        SizedBox(
+                          height: size.height * .05,
                         ),
-                      ),
-                    ],
+                        Row(
+                          children: [
+                            TextBest(
+                              text: 'Category',
+                              fontSize: 16.sp,
+                              color: colorTitle,
+                            ),
+                            const Spacer(),
+                            InkWell(
+                              onTap: (){
+                                navigateTo(context, const AllCategory());
+                              },
+                              child: TextBest(
+                                text: 'See More',
+                                fontSize: 16.sp,
+                                color: colorBlue,
+                              ),
+                            ),
+                          ],
+                        ),
+                        BlocBuilder<CategoryCubit, CategoryState>(
+                          builder: (context, state) {
+                            final categoryModel =
+                                CategoryCubit.get(context).categoryModel;
+
+                            return state is CategoryLoadingState
+                                ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                                : SizedBox(
+                              height: 80.h,
+                              child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const BouncingScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      onTap: () {
+                                        CategoryDetailsCubit.get(context)
+                                            .getCategoryDetails(
+                                            id: categoryModel
+                                                .data.data[index].id);
+                                        navigateTo(context,
+                                            const CategoryDetails());
+                                      },
+                                      child: BuildCategoriesItem(
+                                        categoriesModel:
+                                        categoryModel.data.data[index],
+                                      ),
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) =>
+                                      SizedBox(
+                                        width: 10.w,
+                                      ),
+                                  itemCount:
+                                  categoryModel!.data.data.length),
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          height: size.height * .02,
+                        ),
+                        Row(
+                          children: [
+                            TextBest(
+                              text: 'Products',
+                              fontSize: 16.sp,
+                              color: colorTitle,
+                            ),
+                            const Spacer(),
+                            InkWell(
+                              onTap: (){
+                                navigateTo(context, const AllProduct());
+                              },
+                              child: TextBest(
+                                text: 'See More',
+                                fontSize: 16.sp,
+                                color: colorBlue,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: size.height * .02,
+                        ),
+                        GridView.count(
+                          crossAxisCount: 2,
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 10.0,
+                          childAspectRatio: 1 / 1.5.h,
+                          children: List.generate(
+                              homeModel!.products.length,
+                                  (index) => InkWell(
+                                  onTap: (){
+                                    OneCategoryCubit.get(context).oneCategoryDetails(productId: homeModel.products[index].id);
+                                    navigateTo(context, ProductDetails());
+                                  },
+                                  child: BuildBodyProduct(homeModel: homeModel.products[index],index : index))
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-      },
-    );
+                );
+              },
+            );
+          }else{
+            return Container(
+              color: Colors.white,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Can\'t Connect home details ... Check Internet..',
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.yellow,
+                    ),
+                  ),
+                  Image.asset('assets/images/no internet.png'),
+                ],
+              ),
+            );          }
+        });
+
   }
 }
 
