@@ -25,15 +25,15 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return OfflineBuilder(
-        connectivityBuilder: (
-        BuildContext context,
-        List<ConnectivityResult> connectivity,
-        Widget child,
-    ) {
-          final bool connected = !connectivity.contains(ConnectivityResult.none);
-
-          if(connected){
+    // return OfflineBuilder(
+    //     connectivityBuilder: (
+    //     BuildContext context,
+    //     List<ConnectivityResult> connectivity,
+    //     Widget child,
+    // ) {
+    //       final bool connected = !connectivity.contains(ConnectivityResult.none);
+    //
+    //       if(connected){
             return BlocBuilder<HomeCubit, HomeState>(
               builder: (context, state) {
                 final homeModel = HomeCubit.get(context).homeModel?.data;
@@ -177,25 +177,25 @@ class HomeScreen extends StatelessWidget {
                 );
               },
             );
-          }else{
-            return Container(
-              color: Colors.white,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Can\'t Connect home details ... Check Internet..',
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.yellow,
-                    ),
-                  ),
-                  Image.asset('assets/images/no internet.png'),
-                ],
-              ),
-            );          }
-        });
+          // }else{
+          //   return Container(
+          //     color: Colors.white,
+          //     child: Column(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         const Text(
+          //           'Can\'t Connect home details ... Check Internet..',
+          //           style: TextStyle(
+          //             fontSize: 25,
+          //             fontWeight: FontWeight.bold,
+          //             color: Colors.yellow,
+          //           ),
+          //         ),
+          //         Image.asset('assets/images/no internet.png'),
+          //       ],
+          //     ),
+          //   );          }
+        //});
 
   }
 }
