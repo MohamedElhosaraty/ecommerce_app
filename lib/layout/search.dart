@@ -97,6 +97,8 @@ class SearchScreen extends StatelessWidget {
                                           children: [
                                             Text(
                                               cubit.data[index].name,
+                                              maxLines: 4,
+                                              overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
                                                 fontSize: 15.sp,
                                                 color: Colors.black,

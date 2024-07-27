@@ -15,7 +15,6 @@ import 'package:ecommerce_app/shared/components/navigatorto.dart';
 import 'package:ecommerce_app/shared/components/textbest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -24,16 +23,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
-    // return OfflineBuilder(
-    //     connectivityBuilder: (
-    //     BuildContext context,
-    //     List<ConnectivityResult> connectivity,
-    //     Widget child,
-    // ) {
-    //       final bool connected = !connectivity.contains(ConnectivityResult.none);
-    //
-    //       if(connected){
             return BlocBuilder<HomeCubit, HomeState>(
               builder: (context, state) {
                 final homeModel = HomeCubit.get(context).homeModel?.data;
@@ -177,26 +166,6 @@ class HomeScreen extends StatelessWidget {
                 );
               },
             );
-          // }else{
-          //   return Container(
-          //     color: Colors.white,
-          //     child: Column(
-          //       mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         const Text(
-          //           'Can\'t Connect home details ... Check Internet..',
-          //           style: TextStyle(
-          //             fontSize: 25,
-          //             fontWeight: FontWeight.bold,
-          //             color: Colors.yellow,
-          //           ),
-          //         ),
-          //         Image.asset('assets/images/no internet.png'),
-          //       ],
-          //     ),
-          //   );          }
-        //});
-
   }
 }
 
