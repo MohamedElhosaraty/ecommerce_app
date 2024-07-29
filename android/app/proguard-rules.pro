@@ -1,0 +1,3 @@
+-keep class com.stripe.android.pushProvisioning.PushProvisioningActivity$g { *; }
+-keep class com.stripe.android.pushProvisioning.PushProvisioningActivityStarter$Args { *; }
+-keep class com.stripe.android.pushProvisioning.PushProvisioningEphemeralKeyProvider { *; }
