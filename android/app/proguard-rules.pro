@@ -1,3 +1,12 @@
--keep class com.stripe.android.pushProvisioning.PushProvisioningActivity$g { *; }
--keep class com.stripe.android.pushProvisioning.PushProvisioningActivityStarter$Args { *; }
--keep class com.stripe.android.pushProvisioning.PushProvisioningEphemeralKeyProvider { *; }
+# Please add these rules to your existing keep rules in order to suppress warnings.
+# This is generated automatically by the Android Gradle plugin.
+## Flutter wrapper
+ -keep class io.flutter.app.** { *; }
+ -keep class io.flutter.plugin.** { *; }
+ -keep class io.flutter.util.** { *; }
+ -keep class io.flutter.view.** { *; }
+ -keep class io.flutter.** { *; }
+ -keep class io.flutter.plugins.** { *; }
+ -keep class com.google.firebase.** { *; }
+ -dontwarn io.flutter.embedding.**
+ -ignorewarnings
